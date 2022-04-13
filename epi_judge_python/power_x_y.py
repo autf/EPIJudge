@@ -2,8 +2,11 @@ from test_framework import generic_test
 
 
 def power(x: float, y: int) -> float:
-    # TODO - you fill in here.
-    return 0.0
+    # TODO - better method?
+    a = 1.
+    for _ in range(abs(y)):
+        a *= x
+    return a if y >= 0 else 1/a
 
 
 if __name__ == '__main__':
