@@ -9,7 +9,15 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def random_sampling(k: int, A: List[int]) -> None:
-    # TODO - you fill in here.
+    # assert k <= len(A)
+    # from random import shuffle
+    # shuffle(A)
+
+    from random import randrange
+    N = len(A)
+    for i in range(k):
+        j = randrange(i, N)
+        A[i], A[j] = A[j], A[i]
     return
 
 
