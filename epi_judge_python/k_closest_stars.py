@@ -28,8 +28,8 @@ class Star:
 
 
 def find_closest_k_stars(stars: Iterator[Star], k: int) -> List[Star]:
-    # TODO - you fill in here.
-    return []
+    import heapq
+    return heapq.nsmallest(k, stars)
 
 
 def comp(expected_output, output):
