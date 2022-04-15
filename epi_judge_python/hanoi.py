@@ -9,8 +9,13 @@ NUM_PEGS = 3
 
 
 def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
-    # TODO - you fill in here.
-    return []
+    def mv(k, src, tmp, dst):
+        if k == 0:
+            return
+        yield from mv(k-1, src, dst, tmp)
+        yield src, dst
+        yield from mv(k-1, tmp, src, dst)
+    return list(mv(num_rings, 0, 1, 2))
 
 
 @enable_executor_hook
