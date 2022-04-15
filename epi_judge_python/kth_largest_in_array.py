@@ -7,6 +7,45 @@ from test_framework import generic_test
 # find_kth_largest(1, A) returns 3, find_kth_largest(2, A) returns 2,
 # find_kth_largest(3, A) returns 1, and find_kth_largest(4, A) returns -1.
 def find_kth_largest(k: int, A: List[int]) -> int: # redo q11.8
+    assert k <= len(A)
+
+    # todo: quick select
+
+    from random import randint
+    def swap(i, j):
+        A[i], A[j] = A[j], A[i]
+    i, j = 0, len(A) - 1
+    while True:
+        swap(i, randint(i, j))
+        p = A[i]
+        pi = pj = i
+        u = j
+        while pj < u:
+            pj += 1
+            x = A[pj]
+            if x > p:
+                swap(pi, pj)
+                pi += 1
+            elif x < p:
+                swap(pj, u)
+                u -= 1
+                pj -= 1
+        if pj + 1 < k:
+            i = pj + 1
+        elif pi >= k:
+            j = pi - 1
+        else:
+            return p
+
+    # from my https://leetcode.com/submissions/detail/639175084/
+    import heapq
+    for i, v in enumerate(A):
+        A[i] = -v
+    heapq.heapify(A)
+    for _ in range(k):
+        x = heapq.heappop(A)
+    return -x
+
     A.sort()
     return A[-k]
 
