@@ -3,8 +3,16 @@ from test_framework import generic_test
 
 
 def is_binary_tree_bst(tree: BinaryTreeNode) -> bool:
-    # TODO - you fill in here.
-    return True
+    def inrange(t, lo, hi):
+        if not t:
+            return True
+        v = t.data
+        # print(lo, v, hi)
+        if not (lo <= v <= hi):
+            return False
+        return inrange(t.left, lo, v) and inrange(t.right, v, hi)
+    inf = float('inf')
+    return inrange(tree, -inf, inf)
 
 
 if __name__ == '__main__':

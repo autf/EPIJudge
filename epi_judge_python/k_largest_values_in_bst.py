@@ -5,8 +5,15 @@ from test_framework import generic_test, test_utils
 
 
 def find_k_largest_in_bst(tree: BstNode, k: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    def hcae(t):
+        'hcae is reversed each'
+        if not t:
+            return
+        yield from hcae(t.right)
+        yield t.data
+        yield from hcae(t.left)
+    large = hcae(tree)
+    return [next(large) for _ in range(k)]
 
 
 if __name__ == '__main__':
