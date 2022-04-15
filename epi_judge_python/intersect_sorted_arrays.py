@@ -4,8 +4,18 @@ from test_framework import generic_test
 
 
 def intersect_two_sorted_arrays(A: List[int], B: List[int]) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    from itertools import groupby
+    w = []
+    i = 0
+    for b, _ in groupby(B):
+        try:
+            while A[i] < b:
+                i += 1
+            if A[i] == b:
+                w.append(b)
+        except:
+            break
+    return w
 
 
 if __name__ == '__main__':
