@@ -4,8 +4,12 @@ from test_framework import generic_test, test_utils
 
 
 def phone_mnemonic(phone_number: str) -> List[str]:
-    # TODO - you fill in here.
-    return []
+    from itertools import product
+    m = [      '0',
+          '1','ABC','DEF',
+        'GHI','JKL','MNO',
+       'PQRS','TUV','WXYZ']
+    return [''.join(xs) for xs in product(*map(m.__getitem__, map(int, phone_number)))]
 
 
 if __name__ == '__main__':
