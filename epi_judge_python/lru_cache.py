@@ -2,22 +2,73 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
 
+class _dll:
+    def __init__(self, key=None, val=None):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+    # __repr__ = lambda self: str(self.val)
+    def __repr__(self):
+        return str(self.val)
+
+    def rm(self):
+        _dll.link(self.prev, self.next)
+
+    def prepend(self, x):
+        _dll.link(self.prev, x)
+        _dll.link(x, self)
+
+    @staticmethod
+    def link(a, b):
+        a.next = b
+        b.prev = a
+
+
 class LruCache:
+
     def __init__(self, capacity: int) -> None:
-        # TODO - you fill in here.
-        return
+        self._cap = capacity
+        self._m = {}
+        g = _dll()
+        g.prev = g.next = g
+        self._g = g
 
     def lookup(self, isbn: int) -> int:
-        # TODO - you fill in here.
-        return 0
+        # print(isbn, self._m)
+        try:
+            l = self._m[isbn]
+        except:
+            return -1
+        else:
+            l.rm()
+            self._g.prepend(l)
+            return l.val
 
     def insert(self, isbn: int, price: int) -> None:
-        # TODO - you fill in here.
-        return
+        try:
+            l = self._m[isbn]
+            l.rm()
+        except:
+            if len(self._m) == self._cap:
+                lru = self._g.next
+                lru.rm()
+                del self._m[lru.key]
+            l = _dll(isbn, price)
+            self._m[isbn] = l
+        finally:
+            self._g.prepend(l)
 
     def erase(self, isbn: int) -> bool:
-        # TODO - you fill in here.
-        return True
+        try:
+            l = self._m[isbn]
+        except:
+            return False
+        else:
+            del self._m[isbn]
+            l.rm()
+            return True
 
 
 def lru_cache_tester(commands):
