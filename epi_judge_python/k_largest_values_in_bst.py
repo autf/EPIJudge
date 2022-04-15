@@ -12,8 +12,12 @@ def find_k_largest_in_bst(tree: BstNode, k: int) -> List[int]:
         yield from hcae(t.right)
         yield t.data
         yield from hcae(t.left)
+
     large = hcae(tree)
     return [next(large) for _ in range(k)]
+
+    from itertools import islice
+    return list(islice(hcae(tree), k))
 
 
 if __name__ == '__main__':
